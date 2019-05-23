@@ -47,11 +47,13 @@ export class AssetService {
         }
         if (params.expiration != null){
             //need to format the date
-            _params["expiration"] = params.expiration.toDateString();
+            _params["expiration"] = params.expiration.toString();
         }
 
         issueRequest["params"] = _params;
 
         //make request and return asset
     }
+
+
 }
