@@ -6,7 +6,7 @@ export class AssetService {
 
     private juicechain: JuicEchain;
 
-    public AssetService(juicechain: JuicEchain) {
+    constructor(juicechain: JuicEchain) {
         this.juicechain = juicechain;
     }
 

@@ -13,7 +13,7 @@ export class JSONRequest {
 
         try {
             let result = await rp(options);
-            console.log(result.success); //success is undefined in result?
+            console.log(result); //success is undefined in result?
             if (result && result.success) {
                 return result;
             }
