@@ -1,8 +1,6 @@
 import { JuicEchain } from "../JuicEchain";
 import { Balance } from "../models/Balance";
 import { Wallet } from "../models/Wallet";
-import * as util from "util";
-import { readFile } from "fs";
 
 export class WalletService {
 

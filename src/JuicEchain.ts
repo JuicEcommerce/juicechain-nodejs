@@ -1,7 +1,6 @@
 import { AssetService } from "./services/AssetService";
+import { WalletService } from "./services/WalletService";
 import { JSONRequest } from "./helpers/JSONRequest";
-import { resolve } from "path";
-import { rejects } from "assert";
 
 export class JuicEchain {
 
@@ -9,7 +8,7 @@ export class JuicEchain {
     private username: string;
     private password: string;
 
-    //private walletService: WalletService;
+    private walletService: WalletService;
     private assetService: AssetService;
     //private nodeService: NodeService;
 
@@ -19,6 +18,10 @@ export class JuicEchain {
         this.password = password;
 
         this.assetService = new AssetService(this);
+    }
+
+    public wallets(): WalletService {
+        return this.walletService;
     }
 
     public assets(): AssetService {
