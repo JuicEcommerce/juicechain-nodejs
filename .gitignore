@@ -1,0 +1,5 @@
+**/*.js
+/node_modules/**
+**.js.map
+/src/index.ts
+.vscode/*
