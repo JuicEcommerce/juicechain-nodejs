@@ -10,50 +10,70 @@ export class AssetService {
         this.juicechain = juicechain;
     }
 
-    public issue(name: string, title: string, type: string, amount: number, //throw errors
-                        targetAddress: string, publisher: string, signature: string): Asset {
+    public async issue(name: string, title: string, type: string, amount: number, 
+                        targetAddress: string, publisher: string, signature: string): Promise<Asset> {
         
         let _title = {"de_DE": title};
 
-        let _options = {};
-        _options["transferAll"] = true;
-        _options["transferNode"] = true;
-        _options["returnAddress"] = null;
+        let _options = {
+            transferAll: true,
+            transferNode: true,
+            returnAddress: null
+        };
 
-        let issueRequest = {};
-        issueRequest["name"] = name;
-        issueRequest["title"] = _title;
-        issueRequest["type"] = type;
-        issueRequest["amount"] = amount;
-        issueRequest["target"] = targetAddress;
-        issueRequest["publisher"] = publisher;
+        let issueRequest = {
+            name: name,
+            title: _title,
+            type: type,
+            amount: amount,
+            target: targetAddress,
+            publisher: publisher,
+            options: _options
+        };
 
-        //get response and return asset
+        try {
+            let response = await this.juicechain.requestPost("assets/", JSON.stringify(issueRequest), signature);
+            let asset: Asset = new Asset();
+            asset = response.payload; //check if properties match?
+            return asset;
+        } catch(exception) {
+            return exception;
+        }
+
+
     }
 
-    public issueNFT(name: string, receiver: string, content: string, params: AssetParams, 
-                    amount: number, signature: string): Asset { //throw exceptions
+    public async issueNFT(name: string, receiver: string, content: string, params: AssetParams, 
+                    amount: number, signature: string): Promise<Asset> { //throw exceptions
         
-        let issueRequest = {};
-        issueRequest["name"] = name;
-        issueRequest["receiver"] = receiver;
-        issueRequest["content"] = content;
-        issueRequest["amount"] = amount;
+        let issueRequest = {
+            name: name,
+            receiver: receiver,
+            content: content,
+            amount: amount
+        };
 
         let _params = {};
         if (params.inception != null){
-            //need to format the date
-            _params["inception"] = params.inception.toDateString();
+            _params["inception"] = params.inception;
         }
         if (params.expiration != null){
-            //need to format the date
-            _params["expiration"] = params.expiration.toString();
+            _params["expiration"] = params.expiration;
         }
-
         issueRequest["params"] = _params;
 
         //make request and return asset
+        try {
+            let response = await this.juicechain.requestPost("assets/nft", JSON.stringify(issueRequest), signature);
+            if (response && response.success) {
+                let asset: Asset = new Asset();
+                asset = response.payload;
+                return asset;
+            }
+            return null;
+        } catch(error) {
+            return error;
+        }
     }
-
 
 }
