@@ -12,7 +12,7 @@ export class WalletService {
 
     public async create(): Promise<Wallet> {
         try {
-            let response = await this.juicechain.requestPost("wallet/", "", "");
+            let response = await this.juicechain.requestPost("wallet/", {}, "");
             if (response && response.success) {
                 let wallet: Wallet = new Wallet();
                 wallet = response.payload;
@@ -28,7 +28,7 @@ export class WalletService {
         let balances: Balance[] = null;
 
         try {
-            let response = await this.juicechain.requestGet("/node/wallet/" + address + "/" + minconf + "/" + "/ACV");
+            let response = await this.juicechain.requestGet("node/wallet/" + address + "/" + minconf + "/" + "/ACV");
             if (response && response.success) {
                 balances = [];
                 for (let _balance of response.payload) {

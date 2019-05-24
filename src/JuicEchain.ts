@@ -16,7 +16,7 @@ export class JuicEchain {
         this.node = node;
         this.username = username;
         this.password = password;
-
+        this.walletService = new WalletService(this);
         this.assetService = new AssetService(this);
     }
 
@@ -28,24 +28,32 @@ export class JuicEchain {
         return this.assetService;
     }
 
-    public async requestGet(path: string) {
+    public async requestGet(path: string): Promise<any> {
         let token: string = await this.requestToken();
         if (token == null) {
             throw new Error("NotAuthorizedException");
         }
 
-        let _response: any = await JSONRequest.get(this.node, path, token);
-        return _response;
+        try {
+            let _response: any = await JSONRequest.get(this.node, path, token);
+            return _response;
+        } catch(exception) {
+            return exception;
+        }
     }
 
-    public async requestPost(path: string, body: string, signature: string): Promise<any> { //change return type? throw errors
+    public async requestPost(path: string, body: any, signature: string): Promise<any> { //change return type? throw errors
         let token: string = await this.requestToken();
         if (token == null) {
             throw new Error("NotAuthorizedException");
         }
 
-        let _response: any = await JSONRequest.post(this.node, path, body, token, signature);
-        return _response;
+        try {
+            let _response: any = await JSONRequest.post(this.node, path, body, token, signature);
+            return _response;
+        } catch(exception) {
+            return exception;
+        }
     }
 
     public async requestUpload(path: string, asset: string, file: Buffer): Promise<any> {
@@ -53,9 +61,12 @@ export class JuicEchain {
         if (token == null) {
             throw new Error("NotAuthorizedException");
         }
-
-        let _response: any = await JSONRequest.putMultipart(this.node, path, asset, file, token, "");
-        return _response;
+        try {
+            let _response: any = await JSONRequest.putMultipart(this.node, path, asset, file, token, "");
+            return _response;
+        } catch(error) {
+            return error;
+        }
     }
 
     private async requestToken(): Promise<string> {
@@ -65,7 +76,7 @@ export class JuicEchain {
         };
 
         try {
-            let result = await JSONRequest.post(this.node, "/auth", JSON.stringify(auth), "", "");
+            let result = await JSONRequest.post(this.node, "auth", auth, "", "");
             if (result && result.success) {
                 return result.token as string;
             } else {

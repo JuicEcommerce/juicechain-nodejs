@@ -8,7 +8,6 @@ export class JSONRequest {
         let options = {
             uri: 'https://' + node + '.juicechain.org/' + path,
             method: 'GET',
-            resolveWithFullResponse: true
         }
 
         try {
@@ -23,10 +22,9 @@ export class JSONRequest {
         }
     }
 
-    public static async post(node: string, path: string, body: string, authorization: string, signature: string): Promise<any> { //throw errors
-
+    public static async post(node: string, path: string, body: any, authorization: string, signature: string): Promise<any> {
         let options = {
-            uri: 'https://' + node + '.juicechain.org/' + path,
+            uri: 'https://' + node + '.juicechain.org/node/' + path,
             method: 'POST',
             body: body,
             headers: {
