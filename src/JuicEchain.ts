@@ -41,17 +41,17 @@ export class JuicEchain {
             throw new Error("NotAuthorizedException");
         }
 
-        let _response: string = await JSONRequest.post(this.node, path, body, token, signature);
+        let _response: any = await JSONRequest.post(this.node, path, body, token, signature);
         return _response;
     }
 
-    public async requestUpload(path: string, asset: string, file: Buffer) {
+    public async requestUpload(path: string, asset: string, file: Buffer): Promise<any> {
         let token: string = await this.requestToken();
         if (token == null) {
             throw new Error("NotAuthorizedException");
         }
 
-        let _response: string = await JSONRequest.putMultipart(this.node, path, asset, file, token, "");
+        let _response: any = await JSONRequest.putMultipart(this.node, path, asset, file, token, "");
         return _response;
     }
 

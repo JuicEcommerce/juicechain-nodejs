@@ -1,6 +1,8 @@
 import { JuicEchain } from "../JuicEchain";
-import { Asset } from "../models/Asset"
-import { AssetParams } from "../models/AssetParams"
+import { Asset } from "../models/Asset";
+import { AssetParams } from "../models/AssetParams";
+import * as util from "util";
+import { readFile } from "fs";
 
 export class AssetService {
 
@@ -75,4 +77,53 @@ export class AssetService {
         }
     }
 
+    public async setParameters(inception: Date, expiration: Date): Promise<boolean> {
+        let params = {};
+        if (inception != null){
+            params["inception"] = inception;
+        }
+        if (expiration != null){
+            params["expiration"] = expiration;
+        }
+
+        try {
+            let response = await this.juicechain.requestPost("assets/parameters", JSON.stringify(params), "");
+            if (response) {
+                return response.success as boolean;
+            }
+            return null;
+        } catch(exception) {
+            return exception;
+        }
+    }
+
+    public async setCard(asset: string, filePath: string): Promise<boolean> {
+        let read = util.promisify(readFile);
+
+        let data = await read(filePath);
+        try {
+            let response = await this.juicechain.requestUpload("assets/card", asset, data);
+            if (response) {
+                return response.success as boolean;
+            }
+            return null;
+        } catch(exception) {
+            return exception;
+        }
+    }
+
+    public async setMedia(asset: string, filePath: string): Promise<boolean> {
+        let read = util.promisify(readFile);
+
+        let data = await read(filePath);
+        try {
+            let response = await this.juicechain.requestUpload("assets/media", asset, data);
+            if (response) {
+                return response.success as boolean;
+            }
+            return null;
+        } catch(exception) {
+            return exception;
+        }
+    }
 }
