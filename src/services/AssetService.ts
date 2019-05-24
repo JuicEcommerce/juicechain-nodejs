@@ -62,7 +62,6 @@ export class AssetService {
         }
         issueRequest["params"] = _params;
 
-        //make request and return asset
         try {
             let response = await this.juicechain.requestPost("assets/nft", JSON.stringify(issueRequest), signature);
             if (response && response.success) {
@@ -71,8 +70,8 @@ export class AssetService {
                 return asset;
             }
             return null;
-        } catch(error) {
-            return error;
+        } catch(exception) {
+            return exception;
         }
     }
 

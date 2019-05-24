@@ -61,8 +61,8 @@ export class JuicEchain {
             password: this.password
         };
 
-        let result = await JSONRequest.post(this.node, "/auth", JSON.stringify(auth), "", "");
         try {
+            let result = await JSONRequest.post(this.node, "/auth", JSON.stringify(auth), "", "");
             if (result && result.success) {
                 return result.token as string;
             } else {

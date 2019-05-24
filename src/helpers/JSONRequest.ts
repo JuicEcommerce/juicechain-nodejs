@@ -38,7 +38,6 @@ export class JSONRequest {
 
         try {
             let result = await rp(options);
-            return result;
             if (result && result.success) {
                 return result;
             }
@@ -53,8 +52,6 @@ export class JSONRequest {
         let options = {
             uri: 'https://' + node + '.juicechain.org/' + path,
             method: 'PUT',
-            body: {    
-            },
             headers: {
                 authorization: authorization,
                 signature: signature,
