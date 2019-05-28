@@ -24,11 +24,11 @@ export class WalletService {
         }
     }
 
-    public async getBalance(address, minconf: number): Promise<Balance[]> {
+    public async getBalance(address: string, minconf: number): Promise<Balance[]> {
         let balances: Balance[] = null;
 
         try {
-            let response = await this.juicechain.requestGet("node/wallet/" + address + "/" + minconf + "/" + "/ACV");
+            let response = await this.juicechain.requestGet("node/wallet/" + address + "/" + minconf + "/ACV");
             if (response && response.success) {
                 balances = [];
                 for (let _balance of response.payload) {
@@ -43,7 +43,7 @@ export class WalletService {
         }
     }
 
-    public async transfer(receiverAddress: string, asset: string, quantity: number, payload: string, signature: string): Promise<boolean> {
+    public async transfer(receiverAddress: string, asset: string, quantity: number, payload: any, signature: string): Promise<boolean> {
         let body = {
             asset: asset,
             amount: quantity,
@@ -51,7 +51,7 @@ export class WalletService {
         }
 
         try {
-            let response = await this.juicechain.requestPost("wallet/transfer/" + receiverAddress, JSON.stringify(body), signature);
+            let response = await this.juicechain.requestPost("wallet/transfer/" + receiverAddress, body, signature);
             if (response && response.success) {
                 return true;
             }

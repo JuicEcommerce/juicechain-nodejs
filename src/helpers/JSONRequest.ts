@@ -1,18 +1,20 @@
-import { request } from 'http';
 var rp = require('request-promise');
 
 export class JSONRequest {
 
-    public static async get(node: string, path: string, authorization: string): Promise<any> { //throw errors
+    public static async get(node: string, path: string, authorization: string): Promise<any> {
        
         let options = {
             uri: 'https://' + node + '.juicechain.org/' + path,
             method: 'GET',
+            headers: {
+                authorization: authorization
+            },
+            json: true
         }
 
         try {
             let result = await rp(options);
-            console.log(result); //success is undefined in result?
             if (result && result.success) {
                 return result;
             }
@@ -48,7 +50,7 @@ export class JSONRequest {
     public static async putMultipart(node: string, path: string, asset: string, buffer: Buffer, authorization: string, signature: string): Promise<any> {
         
         let options = {
-            uri: 'https://' + node + '.juicechain.org/' + path,
+            uri: 'https://' + node + '.juicechain.org/node/' + path,
             method: 'PUT',
             headers: {
                 authorization: authorization,
@@ -58,12 +60,13 @@ export class JSONRequest {
             formData: {
                 buffer: buffer,
                 name: asset
-            }
+            },
+            json: true
         }
 
         try {
-            let result: string = await rp(options);
-            if (result && JSON.parse(result).success) {
+            let result = await rp(options);
+            if (result && result.success) {
                 return result;
             }
             return null;

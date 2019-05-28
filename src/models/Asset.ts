@@ -1,5 +1,3 @@
-//import * as qr from "qr-image";
-//import * as fs from "fs"
 export class Asset {
 
     public name: string;

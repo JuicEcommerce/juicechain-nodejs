@@ -4,6 +4,8 @@ import { AssetParams } from "../models/AssetParams";
 import * as util from "util";
 import { readFile } from "fs";
 
+let read = util.promisify(readFile);
+
 export class AssetService {
 
     private juicechain: JuicEchain;
@@ -34,9 +36,9 @@ export class AssetService {
         };
 
         try {
-            let response = await this.juicechain.requestPost("assets/", JSON.stringify(issueRequest), signature);
+            let response = await this.juicechain.requestPost("assets/", issueRequest, signature);
             let asset: Asset = new Asset();
-            asset = response.payload; //check if properties match?
+            asset = response.payload;
             return asset;
         } catch(exception) {
             return exception;
@@ -46,7 +48,7 @@ export class AssetService {
     }
 
     public async issueNFT(name: string, receiver: string, content: string, params: AssetParams, 
-                    amount: number, signature: string): Promise<Asset> { //throw exceptions
+                    amount: number, signature: string): Promise<Asset> {
         
         let issueRequest = {
             name: name,
@@ -65,7 +67,7 @@ export class AssetService {
         issueRequest["params"] = _params;
 
         try {
-            let response = await this.juicechain.requestPost("assets/nft", JSON.stringify(issueRequest), signature);
+            let response = await this.juicechain.requestPost("assets/nft", issueRequest, signature);
             if (response && response.success) {
                 let asset: Asset = new Asset();
                 asset = response.payload;
@@ -87,7 +89,7 @@ export class AssetService {
         }
 
         try {
-            let response = await this.juicechain.requestPost("assets/parameters", JSON.stringify(params), "");
+            let response = await this.juicechain.requestPost("assets/parameters", params, "");
             if (response) {
                 return response.success as boolean;
             }
@@ -98,9 +100,8 @@ export class AssetService {
     }
 
     public async setCard(asset: string, filePath: string): Promise<boolean> {
-        let read = util.promisify(readFile);
-
         let data = await read(filePath);
+
         try {
             let response = await this.juicechain.requestUpload("assets/card", asset, data);
             if (response) {
@@ -113,9 +114,8 @@ export class AssetService {
     }
 
     public async setMedia(asset: string, filePath: string): Promise<boolean> {
-        let read = util.promisify(readFile);
-
         let data = await read(filePath);
+
         try {
             let response = await this.juicechain.requestUpload("assets/media", asset, data);
             if (response) {

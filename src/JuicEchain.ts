@@ -1,5 +1,6 @@
 import { AssetService } from "./services/AssetService";
 import { WalletService } from "./services/WalletService";
+import { NodeService } from "./services/NodeService";
 import { JSONRequest } from "./helpers/JSONRequest";
 
 export class JuicEchain {
@@ -10,7 +11,7 @@ export class JuicEchain {
 
     private walletService: WalletService;
     private assetService: AssetService;
-    //private nodeService: NodeService;
+    private nodeService: NodeService;
 
     constructor(node: string, username:string, password: string) {
         this.node = node;
@@ -18,12 +19,17 @@ export class JuicEchain {
         this.password = password;
         this.walletService = new WalletService(this);
         this.assetService = new AssetService(this);
+        this.nodeService = new NodeService(this);
     }
 
     public wallets(): WalletService {
         return this.walletService;
     }
 
+    public nodeServ(): NodeService {
+        return this.nodeService;
+    }
+    
     public assets(): AssetService {
         return this.assetService;
     }
@@ -42,7 +48,7 @@ export class JuicEchain {
         }
     }
 
-    public async requestPost(path: string, body: any, signature: string): Promise<any> { //change return type? throw errors
+    public async requestPost(path: string, body: any, signature: string): Promise<any> {
         let token: string = await this.requestToken();
         if (token == null) {
             throw new Error("NotAuthorizedException");
@@ -64,8 +70,8 @@ export class JuicEchain {
         try {
             let _response: any = await JSONRequest.putMultipart(this.node, path, asset, file, token, "");
             return _response;
-        } catch(error) {
-            return error;
+        } catch(exception) {
+            return exception;
         }
     }
 
