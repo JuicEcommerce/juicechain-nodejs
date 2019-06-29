@@ -1,18 +1,35 @@
 {
-  "name": "juicechain_sdk",
+  "name": "juicechain",
   "version": "1.0.0",
-  "description": "",
+  "description": "SDK for JuicEchain Blockchain Network",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/node": "^12.0.2"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuicEcommerce/juicechain-sdk-nodejs.git"
   },
+  "keywords": [
+    "Blockchain",
+    "JuicEchain"
+  ],
+  "author": "Michael Hasler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JuicEcommerce/juicechain-sdk-nodejs/issues"
+  },
+  "homepage": "https://github.com/JuicEcommerce/juicechain-sdk-nodejs#readme",
   "dependencies": {
-    "bitcore-lib": "^8.3.0",
+    "bitcore-lib": "^8.3.3",
+    "request": "^2.88.0",
     "request-promise": "^4.2.4"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^12.0.2",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "nyc": "^14.1.1"
   }
 }
