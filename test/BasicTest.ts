@@ -4,6 +4,7 @@ import * as path from "path";
 import {Wallet} from "../src/managed/Wallet";
 import {Asset} from "../src/managed/Asset";
 import {Node} from "../src/managed/Node";
+import {AssetType} from "../src/models/AssetType";
 
 const fs = require("fs");
 
@@ -32,7 +33,7 @@ describe('Testing Asset Issue and Wallet', () => {
 
     it("Issue new asset", async () => {
         assetName = "demo:testasset:" + Math.round(Math.random() * 1000);
-        asset = await demo.issue(assetName, "Mein Test Asset", "admission", 100,
+        asset = await demo.issue(assetName, "Mein Test Asset", AssetType.ADMISSION, 100,
             wallet.address, "BackToTheFuture GmbH");
 
         expect(asset).to.not.be.null;

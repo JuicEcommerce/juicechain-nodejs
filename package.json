@@ -1,6 +1,6 @@
 {
   "name": "juicechain",
-  "version": "1.0.0",
+  "version": "1.0.1sf",
   "description": "SDK for JuicEchain Blockchain Network",
   "main": "index.js",
   "scripts": {

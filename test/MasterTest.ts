@@ -3,6 +3,7 @@ import {Node} from "../src/managed/Node";
 import {JuicEchain} from "../src/JuicEchain";
 import {Asset} from "../src/managed/Asset";
 import {AssetParams} from "../src/models/AssetParams";
+import {AssetType} from "../src/models/AssetType";
 
 const fs = require("fs");
 
@@ -36,7 +37,7 @@ describe('Testing Non Fungible Assets', () => {
         //create master aset with media
         masterName = "demo:testasset:" + Math.round(Math.random() * 1000) + "#";
 
-        const asset = await demo.issue(masterName, "Mein Master Asset", "admission", 1,
+        const asset = await demo.issue(masterName, "Mein Master Asset", AssetType.COUPON, 1,
             wallet.address, "BackToTheFuture GmbH");
 
         expect(asset).to.not.be.null;

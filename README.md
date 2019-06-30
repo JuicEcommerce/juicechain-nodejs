@@ -5,7 +5,7 @@ their success. Our JuicEchain solution is the tool to enable and guarantee exact
 access to blockchain technology without worrying about technical and infrastructure (node-network) requirements, 
 accessible as any other cloud service. <a href="https://juicecommerce.de/juicechain">Learn more here.</a> 
 
-Java SDK for managing a Node in the JuicEchain Blockchain Network. It allows users to create and control Wallets, issue 
+TypeScript SDK for managing a Node in the JuicEchain Blockchain Network. It allows users to create and control Wallets, issue 
 digital Assets and Non-fungible assets (NFA's).<br />
 
 ### Prerequisite
@@ -112,8 +112,8 @@ instant results even of transaction which are yet not minded e.g confirmed by an
  ## Connect to Node
 
 Create a new Node reference by calling "getNode()" from JuicEchain.
- ```java
- Node demo = JuicEchain.getNode("demo", *Username*, *API Key*);
+ ```typescript
+const demo:Node = JuicEchain.getNode("demo", *Username*, *API Key*);
  ```
 
 ## Create your first Wallet
@@ -122,8 +122,8 @@ Wallets are connected to their origin Node. You can call "createWallet()" method
 to receive a new wallet. The wallet is connected to your API user. You can perform transfers
 on your own wallets without need for a signature.  
 
-```java
- Wallet wallet = demo.createWallet();
+```typescript
+const wallet:Wallet = await demo.createWallet();
 ```
 
 ## Issue your first Asset
@@ -131,36 +131,36 @@ on your own wallets without need for a signature.
 Assets are connected to their "issuing" wallet. Means the newly created assets are placed
 into (address / wallet). They can be from there transferred anywhere further  .
 
-```java
- String assetName = "demo:myasset";
- String title = "My First Asset";
- int amount = 100;
- AssetType type = AssetType.admission;
- String publisher = "BackToTheFuture GmbH";
+```typescript
+ const name:string  = "demo:myasset";
+ const title:string = "My First Asset";
+ const amount:number = 100;
+ const type:string = AssetType.ADMISSION;
+ const publisher:string = "BackToTheFuture GmbH";
 
- asset = demo.issue(assetName, title, type, amount, wallet.address, publisher);
+ const asset:Asset = await demo.issue(name, title, type, amount, wallet.address, publisher);
 ```
 
 ## Transfer asset
 
 Call `wallet.transfer()" to transfer the given asset with amount to the receivers address.
 
-```java
- boolean successTransfer = wallet.transfer(*some-wallet-address*, "demo:myasset", 2, "");
+```typescript
+const successTransfer:boolean = await wallet.transfer(*some-wallet-address*, "demo:myasset", 2, "");
 ```
 
 ## Fetch wallet balance
 
 The balance (overview of assets owned and amount) can be fetched directly from the Wallet reference.
 
-```java
-List<Balance> balance = wallet.getBalance();
+```typescript
+const balance:Array<Balance> = await wallet.getBalance();
 ```
 
 Possible result as JSON
 ```json
 [{
-  asset: "demo:myasset",
-  quantity: 2
+  "asset": "demo:myasset",
+  "quantity": 2
 }]
 ```

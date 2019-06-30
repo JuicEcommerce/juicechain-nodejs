@@ -1,4 +1,4 @@
-export enum Direction {
+export enum AssetType {
     ADMISSION = "admission",
     VOUCHER = "voucher",
     COUPON = "coupon",
