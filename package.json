@@ -1,11 +1,11 @@
 {
   "name": "juicechain",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "SDK for JuicEchain Blockchain Network",
-  "main": "index.js",
+  "main": "JuicEchain.js",
   "scripts": {
     "test": "mocha -r test",
-    "build": "tsc --p tsdeploy.json;cp package.json build/package.json"
+    "build": "tsc --p tsdeploy.json;cp package.json build/package.json;cp README.md build/README.md"
   },
   "repository": {
     "type": "git",

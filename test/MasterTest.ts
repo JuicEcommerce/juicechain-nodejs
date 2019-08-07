@@ -2,8 +2,8 @@ import {expect} from "chai";
 import {Node} from "../src/managed/Node";
 import {JuicEchain} from "../src/JuicEchain";
 import {Asset} from "../src/managed/Asset";
-import {AssetParams} from "../src/models/AssetParams";
 import {AssetType} from "../src/models/AssetType";
+
 
 const fs = require("fs");
 
@@ -45,20 +45,20 @@ describe('Testing Non Fungible Assets', () => {
     }).timeout(10000);
 
     it("Issue NFT", async () => {
-        let params: AssetParams = new AssetParams();
+        let params:any = {};
         params.inception = new Date("2019-05-05");
         params.expiration = new Date("2019-06-05");
 
         const signature = wallet.getAuthentication();
 
-        let nft: Asset = await demo.issueNFT(masterName + "1", wallet2.address, "", params, 1, signature);
+        let nft: Asset = await demo.issueChild(masterName + "1", wallet2.address, "", params, 1, signature);
 
         expect(nft).to.not.be.null;
         expect(nft.publisher).equals("BackToTheFuture GmbH");
     }).timeout(15000);
 
     it("Fetch Balance", async () => {
-        const balances = await wallet2.getBalance(0);
+        const balances = await wallet2.balance(0);
 
         expect(balances).to.be.an.instanceof(Array);
         expect(balances.length).to.equal(1);

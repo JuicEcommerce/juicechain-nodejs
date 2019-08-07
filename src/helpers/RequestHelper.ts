@@ -29,9 +29,9 @@ export class RequestHelper {
         return await RequestHelper.put(this.node, path, body, token, authentication);
     }
 
-    public async requestUpload(path: string, asset: string, file: Buffer): Promise<any> {
+    public async requestUpload(path: string, asset: string, file: Buffer, target: string, style: string): Promise<any> {
         let token: string = await this.requestToken();
-        return await RequestHelper.putMultipart(this.node, path, asset, file, token, "");
+        return await RequestHelper.putMultipart(this.node, path, asset, file, target, style, token, "");
     }
 
     private async requestToken(): Promise<string> {
@@ -110,7 +110,8 @@ export class RequestHelper {
         }
     }
 
-    public static async putMultipart(node: string, path: string, asset: string, buffer: Buffer, authorization: string, authentication: string): Promise<any> {
+    public static async putMultipart(node: string, path: string, asset: string, buffer: Buffer,
+                                     target: string, style: string, authorization: string, authentication: string): Promise<any> {
         
         let options = {
             uri: 'https://' + node + '.juicechain.org/' + path,
@@ -122,7 +123,9 @@ export class RequestHelper {
             },
             formData: {
                 buffer: buffer,
-                name: asset
+                name: asset,
+                target: target,
+                style: style
             },
             json: true
         };
