@@ -1,6 +1,5 @@
 import {RequestHelper} from "../helpers/RequestHelper";
 import {Asset} from "./Asset";
-import {AssetParams} from "../models/AssetParams";
 import {IssueRejectionError} from "../errors/IssueRejectionError";
 import {Wallet} from "./Wallet";
 
@@ -64,11 +63,11 @@ export class Node {
             asset.parse(response.payload);
             return asset;
         } catch (exception) {
-            return exception;
+            throw new IssueRejectionError(exception.message);
         }
     }
 
-    public async issueNFT(name: string, receiver: string, content: string, params: AssetParams,
+    public async issueChild(name: string, receiver: string, content: string, params: any,
                           amount: number, authentication: string): Promise<Asset> { //throw exceptions
 
         let issueRequest = {
@@ -85,10 +84,13 @@ export class Node {
         if (params.expiration != null) {
             _params["expiration"] = params.expiration;
         }
+        if (params.transferable != null)
+            _params["transferable"] = params.transferable;
+
         issueRequest["params"] = _params;
 
         try {
-            let response = await this.requestHelper.requestPost("node/nft", issueRequest, authentication);
+            let response = await this.requestHelper.requestPost("node/asset/child", issueRequest, authentication);
             if (response.success) {
                 const asset: Asset = new Asset(this);
                 asset.parse(response.payload);

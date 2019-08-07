@@ -79,7 +79,7 @@ export class Wallet {
 
     }
 
-    public async getBalance(minconf: number): Promise<Balance[]> {
+    public async balance(minconf: number): Promise<Balance[]> {
         let balances: Balance[] = null;
 
         try {
