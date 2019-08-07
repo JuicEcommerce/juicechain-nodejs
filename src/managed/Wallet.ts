@@ -83,7 +83,7 @@ export class Wallet {
         let balances: Balance[] = null;
 
         try {
-            let response = await this._node.request().requestGet("/node/wallet/" + this.address + "/" + minconf + "/" + "/ACV");
+            let response = await this._node.request().requestGet("node/wallet/" + this.address + "/" + minconf + "/" + "ACV");
             if (response && response.success) {
                 balances = [];
                 for (let _balance of response.payload) {

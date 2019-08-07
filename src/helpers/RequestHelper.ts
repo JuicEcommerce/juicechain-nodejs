@@ -36,6 +36,14 @@ export class RequestHelper {
         return await this.putMultipart(this.node, path, asset, file, target, style, token, "");
     }
 
+    private getNodeUrl(path: string): string{
+        if (this.nodeUri){
+            return this.nodeUri + "/" + path;
+        } else {
+            return 'https://' + this.node + '.juicechain.org/' + path
+        }
+    }
+
     private async requestToken(): Promise<string> {
         let auth = {
             username: this.username,
@@ -47,14 +55,6 @@ export class RequestHelper {
             return result.token;
         } else {
             throw new NotAuthorizedError("Invalid username and or password provided!");
-        }
-    }
-
-    private getNodeUrl(path: string): string{
-        if (this.nodeUri){
-            return this.nodeUri + "/" + path;
-        } else {
-            return 'https://' + this.node + '.juicechain.org/' + path
         }
     }
 

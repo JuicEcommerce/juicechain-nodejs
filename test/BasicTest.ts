@@ -79,7 +79,7 @@ describe('Testing Asset Issue and Wallet', () => {
         const asset2:Asset = await wallet.getAsset(asset.name);
         expect(asset2.transferable).to.be.equal("all");
         expect(asset2.inception.getTime()).to.be.equal(date.getTime());
-        expect(asset2.disabled).to.be.true;
+        expect(asset2.disabled).to.be.false;
 
         expect(result).to.be.true;
     }).timeout(10000);
