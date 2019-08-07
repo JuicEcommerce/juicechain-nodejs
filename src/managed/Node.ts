@@ -8,9 +8,9 @@ export class Node {
     public node: string;
     private requestHelper: RequestHelper;
 
-    constructor(node: string, username: string, apiKey: string) {
+    constructor(node: string, username: string, apiKey: string, nodeUri?: string) {
         this.node = node;
-        this.requestHelper = new RequestHelper(node, username, apiKey);
+        this.requestHelper = new RequestHelper(node, username, apiKey, nodeUri);
     }
 
     public async createWallet(): Promise<Wallet> {

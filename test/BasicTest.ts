@@ -8,6 +8,8 @@ import {AssetType} from "../src/models/AssetType";
 
 const fs = require("fs");
 
+const {username, key, node} = process.env;
+
 var demo: Node;
 var wallet: Wallet;
 var asset: Asset;
@@ -19,7 +21,7 @@ var assetName: string;
 describe('Testing Asset Issue and Wallet', () => {
 
     it('Create Node reference', async () => {
-        demo = JuicEchain.getNode("demo", "", "");
+        demo = JuicEchain.getNode("demo", username, key, node);
 
         expect(demo).not.to.be.null;
     });

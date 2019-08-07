@@ -1,9 +1,8 @@
-import {expect} from "chai";
 import {Node} from "../src/managed/Node";
-import {JuicEchain} from "../src/JuicEchain";
 import {Asset} from "../src/managed/Asset";
+import {expect} from "chai";
 import {AssetType} from "../src/models/AssetType";
-
+import {JuicEchain} from "../src/JuicEchain";
 
 const fs = require("fs");
 
@@ -13,13 +12,15 @@ var wallet;
 var wallet2;
 var masterName;
 
+const {username, key} = process.env;
+
 /**
  *  Testing Asset Issue and Wallet
  */
 describe('Testing Non Fungible Assets', () => {
 
     it('Create Node reference', async () => {
-        demo = JuicEchain.getNode("demo", "", "");
+        demo = JuicEchain.getNode("demo", username, key, node);
         expect(demo).not.to.be.null;
     });
 

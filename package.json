@@ -4,8 +4,9 @@
   "description": "SDK for JuicEchain Blockchain Network",
   "main": "JuicEchain.js",
   "scripts": {
-    "test": "mocha -r test",
-    "build": "tsc --p tsdeploy.json;cp package.json build/package.json;cp README.md build/README.md"
+    "test": "mocha --recursive test",
+    "build": "tsc --p tsdeploy.json;cp package.json build/package.json;cp README.md build/README.md",
+    "jenkins-test": "JUNIT_REPORT_PATH=report.xml mocha --colors --reporter mocha-jenkins-reporter --exit --recursive ./test"
   },
   "repository": {
     "type": "git",
