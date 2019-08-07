@@ -12,7 +12,7 @@ var wallet;
 var wallet2;
 var masterName;
 
-const {username, key} = process.env;
+const {username, key, node} = process.env;
 
 /**
  *  Testing Asset Issue and Wallet
