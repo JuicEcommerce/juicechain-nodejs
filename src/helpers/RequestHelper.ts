@@ -132,7 +132,7 @@ export class RequestHelper {
                 'content-type': 'multipart/form-data'
             },
             formData: {
-                buffer: buffer,
+                buffer: buffer == null ? Buffer.from([0]) : buffer,
                 name: asset,
                 target: target,
                 style: style

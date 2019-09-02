@@ -39,8 +39,6 @@ export class Node {
     public async issue(name: string, title: string, type: string, amount: number,
                        targetAddress: string, publisher: string): Promise<Asset> {
 
-        let _title = {"de_DE": title};
-
         let _options = {
             transferAll: true,
             transferNode: true,
@@ -49,7 +47,7 @@ export class Node {
 
         let issueRequest = {
             name: name,
-            title: _title,
+            title: title,
             type: type,
             amount: amount,
             target: targetAddress,
