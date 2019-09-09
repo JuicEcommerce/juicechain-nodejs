@@ -78,6 +78,21 @@ export class Asset {
         }
     }
 
+    public async setPattern(pattern: any): Promise<boolean>{
+        try {
+            let response = await this.node.request().requestPut("node/asset/pattern", {
+                name: this.name,
+                pattern: pattern
+            }, "");
+            if (response) {
+                return response.success as boolean;
+            }
+            return null;
+        } catch(exception) {
+            return exception;
+        }
+    }
+
     public async setContent(content: any): Promise<boolean>{
         try {
             let response = await this.node.request().requestPut("node/asset/content", {

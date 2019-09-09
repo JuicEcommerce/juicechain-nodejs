@@ -110,10 +110,7 @@ export class Wallet {
 
         try {
             let response = await this._node.request().requestPost("node/wallet/transfer/" + receiverAddress, body, authentication);
-            if (response && response.success) {
-                return response;
-            }
-            return null; //failed transfer
+            return response;
         } catch(exception) {
             return exception;
         }
