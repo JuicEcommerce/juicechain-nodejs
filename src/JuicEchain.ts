@@ -1,9 +1,10 @@
-import {Node} from "./managed/Node";
+import {Host} from "./core/Host";
+
 
 export class JuicEchain {
 
-    static getNode(node: string, username: string, apiKey: string, nodeUri?: string):Node{
-        return new Node(node, username, apiKey, nodeUri);
+    static getHost(hostUrl: string, username?: string, apiKey?: string): Host {
+        return new Host(hostUrl, username, apiKey);
     }
 
 }

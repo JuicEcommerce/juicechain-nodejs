@@ -31,8 +31,8 @@ Authentication tokens, are short-lived tokens, so we can ensure they are only us
 
 ### Good to Know
 
-#### Wallet
-Wallet is a unique address in JuicEchain which allows its owner to manage and collect digital Assets. It is based on 
+#### ManagedWallet
+ManagedWallet is a unique address in JuicEchain which allows its owner to manage and collect digital Assets. It is based on 
 asymmetric encryption with public (wallet address) and private keys (made for securing and signing every transaction).  
 
 
@@ -116,14 +116,14 @@ Create a new Node reference by calling "getNode()" from JuicEchain.
 const demo:Node = JuicEchain.getNode("demo", *Username*, *API Key*);
  ```
 
-## Create your first Wallet
+## Create your first ManagedWallet
 
 Wallets are connected to their origin Node. You can call "createWallet()" method on the Node reference
 to receive a new wallet. The wallet is connected to your API user. You can perform transfers
 on your own wallets without need for a signature.  
 
 ```typescript
-const wallet:Wallet = await demo.createWallet();
+const wallet:ManagedWallet = await demo.createWallet();
 ```
 
 ## Issue your first Asset
@@ -151,7 +151,7 @@ const successTransfer:boolean = await wallet.transfer(*some-wallet-address*, "de
 
 ## Fetch wallet balance
 
-The balance (overview of assets owned and amount) can be fetched directly from the Wallet reference.
+The balance (overview of assets owned and amount) can be fetched directly from the ManagedWallet reference.
 
 ```typescript
 const balance:Array<Balance> = await wallet.getBalance();

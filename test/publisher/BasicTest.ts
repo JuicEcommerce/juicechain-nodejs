@@ -1,18 +1,16 @@
-import {expect} from "chai";
-import {JuicEchain} from "../src/JuicEchain";
 import * as path from "path";
-import {Wallet} from "../src/managed/Wallet";
-import {Asset} from "../src/managed/Asset";
-import {Node} from "../src/managed/Node";
-import {AssetType} from "../src/models/AssetType";
+import {Asset} from "../../src/models/Asset";
+import {expect} from "chai";
+import {JuicEchain} from "../../src/JuicEchain";
+import {ManagedWallet} from "../../src/publisher/ManagedWallet";
 
 const fs = require("fs");
 
 const {username, key, node} = process.env;
 
 var demo: Node;
-var wallet: Wallet;
 var asset: Asset;
+var wallet: ManagedWallet;
 var assetName: string;
 
 /**

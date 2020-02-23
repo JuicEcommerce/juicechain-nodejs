@@ -1,4 +1,4 @@
-export type MultiLocaleString = {
+export type LocalizedString = {
 
     af_ZA?: string,
     am_ET?: string,

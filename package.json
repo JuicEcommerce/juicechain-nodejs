@@ -23,15 +23,16 @@
   },
   "homepage": "https://github.com/JuicEcommerce/juicechain-sdk-nodejs#readme",
   "dependencies": {
-    "bitcore-lib": "^8.3.3",
+    "@types/chai": "^4.2.9",
+    "eth-crypto": "^1.5.2",
     "request": "^2.88.0",
     "request-promise": "^4.2.4"
   },
   "devDependencies": {
-    "@types/mocha": "^5.2.6",
+    "@types/mocha": "^5.2.7",
     "@types/node": "^12.0.2",
     "chai": "^4.2.0",
-    "mocha": "^6.1.4",
+    "mocha": "^7.0.1",
     "mocha-jenkins-reporter": "^0.4.2",
     "nyc": "^14.1.1"
   }

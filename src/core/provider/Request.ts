@@ -2,46 +2,39 @@ import {NotAuthorizedError} from "../errors/NotAuthorizedError";
 
 const rp = require('request-promise');
 
-export class RequestHelper {
+export class Request {
 
-    private node: string;
-    private username: string;
     private apiKey: string;
-    private nodeUri: string;
+    private hostUrl: string;
+    private username: string;
 
-    constructor(node: string, username: string, apiKey: string, nodeUri?: string){
-        this.node = node;
+    constructor(hostUrl: string, username: string, apiKey: string){
+        this.hostUrl = hostUrl;
         this.username = username;
         this.apiKey = apiKey;
-        this.nodeUri = nodeUri;
     }
 
-    public async requestGet(path: string) {
-        let token: string = await this.requestToken();
-        return await this.get(this.node, path, token);
-    }
-
-    public async requestPost(path: string, body: any, authentication?: string): Promise<any> {
-        let token: string = await this.requestToken();
-        return await this.post(this.node, path, body, token, authentication);
-    }
-
-    public async requestPut(path: string, body: any, authentication: string): Promise<any> {
-        let token: string = await this.requestToken();
-        return await this.put(this.node, path, body, token, authentication);
-    }
-
-    public async requestUpload(path: string, asset: string, file: Buffer, target: string, style: string): Promise<any> {
-        let token: string = await this.requestToken();
-        return await this.putMultipart(this.node, path, asset, file, target, style, token, "");
-    }
-
-    private getNodeUrl(path: string): string{
-        if (this.nodeUri){
-            return this.nodeUri + "/" + path;
-        } else {
-            return 'https://' + this.node + '.juicechain.org/' + path
+    public async get(path: string, tokenRequired = true) {
+        let token = null;
+        if (tokenRequired) {
+            token = await this.requestToken();
         }
+        return await this.requestGet(path, token);
+    }
+
+    public async post(path: string, body: any, authentication?: string): Promise<any> {
+        let token: string = await this.requestToken();
+        return await this.requestPost(path, body, token, authentication);
+    }
+
+    public async put(path: string, body: any, authentication: string): Promise<any> {
+        let token: string = await this.requestToken();
+        return await this.requestPut(path, body, token, authentication);
+    }
+
+    public async putMultipart(path: string, file: Buffer, authentication: string): Promise<any> {
+        let token: string = await this.requestToken();
+        return await this.requestPutMultipart(path, file, token, authentication);
     }
 
     private async requestToken(): Promise<string> {
@@ -50,7 +43,7 @@ export class RequestHelper {
             key: this.apiKey
         };
 
-        let result = await this.post(this.node, "node/auth", auth, "",  "");
+        let result = await this.requestPost("publisher/auth", auth, "", "");
         if (result && result.success) {
             return result.token;
         } else {
@@ -58,10 +51,10 @@ export class RequestHelper {
         }
     }
 
-    private async get(node: string, path: string, authorization: string): Promise<any> { //throw errors
+    private async requestGet(path: string, authorization: string): Promise<any> { //throw errors
        
         let options = {
-            uri: this.getNodeUrl(path),
+            uri: this.hostUrl + "/" + path,
             method: 'GET',
             headers: {
                 authorization: authorization
@@ -80,10 +73,10 @@ export class RequestHelper {
         }
     }
 
-    private async post(node: string, path: string, body: any, authorization: string, authentication: string): Promise<any> { //throw errors
+    private async requestPost(path: string, body: any, authorization: string, authentication: string): Promise<any> { //throw errors
 
         let options = {
-            uri: this.getNodeUrl(path),
+            uri: this.hostUrl + "/" + path,
             method: 'POST',
             body: body,
             headers: {
@@ -100,10 +93,10 @@ export class RequestHelper {
         }
     }
 
-    private  async put(node: string, path: string, body: any, authorization: string, authentication: string): Promise<any> { //throw errors
+    private async requestPut(path: string, body: any, authorization: string, authentication: string): Promise<any> { //throw errors
 
         let options = {
-            uri: this.getNodeUrl(path),
+            uri: this.hostUrl + "/" + path,
             method: 'PUT',
             body: body,
             headers: {
@@ -120,11 +113,10 @@ export class RequestHelper {
         }
     }
 
-    private async putMultipart(node: string, path: string, asset: string, buffer: Buffer,
-                                     target: string, style: string, authorization: string, authentication: string): Promise<any> {
+    private async requestPutMultipart(path: string, buffer: Buffer, authorization: string, authentication: string): Promise<any> {
         
         let options = {
-            uri: this.getNodeUrl(path),
+            uri: this.hostUrl + "/" + path,
             method: 'PUT',
             headers: {
                 authorization: authorization,
@@ -133,9 +125,6 @@ export class RequestHelper {
             },
             formData: {
                 buffer: buffer == null ? Buffer.from([0]) : buffer,
-                name: asset,
-                target: target,
-                style: style
             },
             json: true
         };

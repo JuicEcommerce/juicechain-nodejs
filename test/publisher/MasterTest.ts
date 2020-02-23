@@ -1,12 +1,10 @@
-import {Node} from "../src/managed/Node";
-import {Asset} from "../src/managed/Asset";
+import {Host} from "../../src/core/Host";
 import {expect} from "chai";
-import {AssetType} from "../src/models/AssetType";
-import {JuicEchain} from "../src/JuicEchain";
+import {JuicEchain} from "../../src/JuicEchain";
 
 const fs = require("fs");
 
-var demo: Node;
+var demo: Host;
 var juicechain;
 var wallet;
 var wallet2;
@@ -19,8 +17,8 @@ const {username, key, node} = process.env;
  */
 describe('Testing Non Fungible Assets', () => {
 
-    it('Create Node reference', async () => {
-        demo = JuicEchain.getNode("demo", username, key, node);
+    it('Create Host ', async () => {
+        demo = JuicEchain.getHost("demo-host.juicechain.org", username, key);
         expect(demo).not.to.be.null;
     });
 
