@@ -3,15 +3,20 @@ import {Asset} from "../../src/models/Asset";
 import {expect} from "chai";
 import {JuicEchain} from "../../src/JuicEchain";
 import {ManagedWallet} from "../../src/publisher/ManagedWallet";
+import {Host} from "../../src/core/Host";
+import {Publisher} from "../../src/publisher/Publisher";
 
 const fs = require("fs");
 
-const {username, key, node} = process.env;
+const { username, key, host } = process.env;
+const { publishersIdLiteral, publishersAccount, publishersId } = process.env;
 
-var demo: Node;
+var demo: Host;
 var asset: Asset;
+var publisher: Publisher;
+var assetId: string;
 var wallet: ManagedWallet;
-var assetName: string;
+
 
 /**
  *  Testing Asset Issue and Wallet
@@ -19,21 +24,22 @@ var assetName: string;
 describe('Testing Asset Issue and Wallet', () => {
 
     it('Create Node reference', async () => {
-        demo = JuicEchain.getNode("demo", username, key, node);
+        demo = JuicEchain.getHost(host, username, key);
+        publisher = JuicEchain.getPublisher(publishersId, host, username, key);
 
         expect(demo).not.to.be.null;
     });
 
     it('Create Wallet', async () => {
-        wallet = await demo.createWallet();
+        wallet = await publisher.createWallet(0);
 
         expect(wallet).to.not.be.null;
-        expect(wallet.node).equals("demo");
+        expect(wallet.address).to.not.be.null;
     }).timeout(10000);
 
     it("Issue new asset", async () => {
-        assetName = "demo:testasset:" + Math.round(Math.random() * 1000);
-        asset = await demo.issue(assetName, "Mein Test Asset", AssetType.ADMISSION, 100,
+        assetId = publishersId + ":" + Math.round(Math.random() * 1000);
+        asset = await publisher.issue(assetId, { de_DE:"Mein Test Asset" }, 100,
             wallet.address, "BackToTheFuture GmbH");
 
         expect(asset).to.not.be.null;

@@ -3,6 +3,9 @@ import {Asset} from "../models/Asset";
 import {ManagedAsset} from "./ManagedAsset";
 import {ManagedWallet} from "./ManagedWallet";
 import {IssueRejectionError} from "../core/errors/IssueRejectionError";
+import {PublisherId} from "../core/types/PublisherId";
+import {AssetId} from "../core/types/AssetId";
+import {LocalizedString} from "../core/types/LocalizedString";
 
 /**
  *  Managed Publisher
@@ -10,13 +13,22 @@ import {IssueRejectionError} from "../core/errors/IssueRejectionError";
 export class Publisher {
 
     public host: Host;
+    public id: PublisherId;
 
-    constructor(host: Host) {
+    constructor(host: Host, id: PublisherId) {
         this.host = host;
+        this.id = id;
     }
 
-    public async createWallet(): Promise<ManagedWallet> {
-        let response = await this.host.request().post("node/wallet", {});
+    /**
+     * Open new wallet from publisher
+     *
+     * @param transferLock
+     */
+    public async createWallet(transferLock: number): Promise<ManagedWallet> {
+        let response = await this.host.request().post("publisher/wallet", {
+            transferLock: transferLock
+        });
 
         if (response && response.success) {
             const wallet: ManagedWallet = new ManagedWallet(this.host);
@@ -27,6 +39,13 @@ export class Publisher {
         return null;
     }
 
+    /**
+     * Create local Active Wallet
+     *
+     * @param privateKey
+     * @param address
+     * @param publicKey
+     */
     public getWallet(privateKey: string, address: string, publicKey?: string): ManagedWallet {
         const wallet = new ManagedWallet(this.host);
         wallet.address = address;
@@ -36,27 +55,27 @@ export class Publisher {
         return wallet;
     }
 
-    public async issue(name: string, title: string, type: string, amount: number,
-                       targetAddress: string, publisher: string): Promise<ManagedAsset> {
-
-        let _options = {
-            transferAll: true,
-            transferNode: true,
-            returnAddress: null
-        };
+    /**
+     * Issue Asset
+     *
+     * @param id
+     * @param title
+     * @param type
+     * @param amount
+     * @param targetAddress
+     * @param publisher
+     */
+    public async issue(id: AssetId, root: boolean, quantity: number, title: LocalizedString): Promise<ManagedAsset> {
 
         let issueRequest = {
-            name: name,
+            id: id,
             title: title,
-            type: type,
-            amount: amount,
-            target: targetAddress,
-            publisher: publisher,
-            options: _options
+            root: root,
+            quantity: quantity
         };
 
         try {
-            let response = await this.host.request().post("publisher/asset", issueRequest);
+            let response = await this.host.request().post("publisher/asset/" + id.getHex(), issueRequest);
             const asset: ManagedAsset = new ManagedAsset(this);
             asset.parse(response.payload);
             return asset;
@@ -65,8 +84,18 @@ export class Publisher {
         }
     }
 
+    /**
+     * Issue child asset
+     *
+     * @param name
+     * @param receiver
+     * @param content
+     * @param params
+     * @param amount
+     * @param authentication
+     */
     public async issueChild(name: string, receiver: string, content: string, params: any,
-                            amount: number, authentication: string): Promise<Asset> { //throw exceptions
+                            amount: number, authentication: string): Promise<ManagedAsset> { //throw exceptions
 
         let issueRequest = {
             name: name,
@@ -75,22 +104,11 @@ export class Publisher {
             amount: amount
         };
 
-        let _params = {};
-        if (params.inception != null) {
-            _params["inception"] = params.inception;
-        }
-        if (params.expiration != null) {
-            _params["expiration"] = params.expiration;
-        }
-        if (params.transferable != null)
-            _params["transferable"] = params.transferable;
-
-        issueRequest["params"] = _params;
 
         try {
-            let response = await this.host.request().post("publisher/asset/child", issueRequest, authentication);
+            let response = await this.host.request().post("publisher/asset/issue-nft", issueRequest, authentication);
             if (response.success) {
-                const asset: Asset = new Asset(this);
+                const asset: ManagedAsset = new ManagedAsset(this);
                 asset.parse(response.payload);
                 return asset;
             } else {

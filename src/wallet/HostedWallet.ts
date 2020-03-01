@@ -3,7 +3,7 @@ import {Host} from "../core/Host";
 import {Asset} from "../models/Asset";
 import {Wallet} from "../models/Wallet";
 import {Balance} from "../core/types/Balance";
-import {AssetId} from "../core/types/AssetId";
+import {AssetIdHex} from "../core/types/AssetIdHex";
 import {Address} from "../core/types/Address";
 
 
@@ -46,7 +46,7 @@ export class HostedWallet extends Wallet{
      * @param asset
      * @param quantity
      */
-    public async transfer(receiver: Address, assetId: AssetId, quantity: number):Promise<boolean> {
+    public async transfer(receiver: Address, assetId: AssetIdHex, quantity: number):Promise<boolean> {
 
         const command = this.host.createCommand("transfer", {
             receiver: receiver,
@@ -143,7 +143,7 @@ export class HostedWallet extends Wallet{
      * @param address
      * @param name
      */
-    public async getAsset(assetId: AssetId):Promise<Asset> {
+    public async getAsset(assetId: AssetIdHex):Promise<Asset> {
 
         const command = this.host.createCommand("details",
             {

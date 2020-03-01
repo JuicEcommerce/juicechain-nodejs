@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import {JuicEchain} from "../../src/JuicEchain";
 import {PublisherId} from "../../src/core/types/PublisherId";
-import {AssetId} from "../../src/core/types/AssetId";
+import {AssetIdHex} from "../../src/core/types/AssetId";
 import {HostedWallet} from "../../src/wallet/HostedWallet";
 
 const sourceWallet = {
@@ -10,7 +10,7 @@ const sourceWallet = {
     address: "0x2475733403f8a94aA8A09d5920b05c65308b12a5",
 };
 const publisherId: PublisherId = "0x6d676970696e7a78";
-const assetId: AssetId = "0x6d676970696e7a78746573743a41737365743a31353831393633373137363139";
+const assetId: AssetIdHex = "0x6d676970696e7a78746573743a41737365743a31353831393633373137363139";
 const {hostUri, key} = process.env;
 
 var demoHost;
