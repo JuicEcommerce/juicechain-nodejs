@@ -1,54 +1,69 @@
-import {PublisherId} from "./PublisherId";
+export class Bytes32 {
 
-const Web3 = require("web3");
+    protected value: any[] = [];
 
-export class Bytes32{
+    constructor(value: string | []) {
+        if (value) this.parse(value);
+    }
 
-    private id: string;
-
-    constructor(id: string) {
-        if(id.startsWith("0x")) {
-            this.id = id;
+    public parse(value: string | []){
+        if (value instanceof Array){
+            this.value = value;
+        } else if(value.startsWith("0x")) {
+            this.value = this.hexToBytes(value);
         } else {
-            this.id = Web3.utils.fromAscii(id);
+            throw new Error("Invalid value");
         }
     }
 
-    public equals(object: Bytes32){
-        return (object.toString() == this.toString());
-    }
-
-    public toAscii(){
-        return Web3.utils.toAscii(this.id);
-    }
-
-    public toString(){
-        return this.id;
-    }
-
-    public parse(ascii: string): Bytes32 {
-        return new Bytes32(Web3.utils.fromAscii(ascii));
-    }
-
     public static fromAscii(ascii: string): string {
-        return Web3.utils.fromAscii(ascii);
+        if(!ascii)
+            return "0x00";
+        let hex = "";
+        for(let i = 0; i < ascii.length; i++) {
+            let code = ascii.charCodeAt(i);
+            let n = code.toString(16);
+            hex += n.length < 2 ? '0' + n : n;
+        }
+        return "0x" + hex;
     }
 
     public static toAscii(hex: string): string {
-        return Web3.utils.toAscii(hex);
+        if (!this.isHexString(hex))
+            throw new Error("Invalid Hex String");
+        let str = "";
+        let i = 0, l = hex.length;
+        if (hex.substring(0, 2) === '0x') {
+            i = 2;
+        }
+        for (; i < l; i+=2) {
+            let code = parseInt(hex.substr(i, 2), 16);
+            str += String.fromCharCode(code);
+        }
+        return str;
     }
 
-    public static createAssetId(publisherHex: PublisherId, assetIdAscii: string){
-        return Bytes32.fromAscii(Bytes32.toAscii(publisherHex) + assetIdAscii);
+    private static isHexString(value: string): boolean{
+        const a = parseInt(value,16);
+        return (a.toString(16) === value.toLowerCase());
     }
 
-    private hexToBytes(hex) {
+    protected hexToBytes(hex, padding?: number): any[] {
+        if (hex.startsWith("0x"))
+            hex = hex.substr(2);
         for (var bytes = [], c = 0; c < hex.length; c += 2)
             bytes.push(parseInt(hex.substr(c, 2), 16));
+
+        const i = this.bytesToHex(bytes);
+
+        if (padding)
+            for(let i=bytes.length;i<padding;i++)
+                bytes.unshift(0);
+
         return bytes;
     }
 
-    private bytesToHex(bytes) {
+    protected bytesToHex(bytes) {
         for (var hex = [], i = 0; i < bytes.length; i++) {
             var current = bytes[i] < 0 ? bytes[i] + 256 : bytes[i];
             hex.push((current >>> 4).toString(16));
@@ -57,13 +72,55 @@ export class Bytes32{
         return hex.join("");
     }
 
-    public extractPublisherId(): PublisherId {
-        const bytes = this.hexToBytes(this.id);
-        return "0x" + this.bytesToHex(bytes.slice(1, 9));
+
+    protected stringToBytes(value: string, padding?: number) {
+        const hexValue = Bytes32.fromAscii(value);
+        return this.hexToBytes(hexValue, padding);
+    }
+
+    protected bytesToString(bytes: [], removePadding: boolean) {
+        if (removePadding)
+            bytes = bytes.reduce((array, byte ) => {
+                if (byte != 0)
+                    array.push(byte);
+                return array;
+            }, []);
+
+        const hexValue = this.bytesToHex(bytes);
+        return Bytes32.toAscii("0x" + hexValue);
+    }
+
+    protected bytesToNumber(bytes: []){
+        let val = 0;
+        for (let i = 0; i < bytes.length; ++i) {
+            val += bytes[i];
+            if (i < bytes.length-1) {
+                val = val << 8;
+            }
+        }
+        return val;
+    }
+
+    protected numberToBytes(value: number): any[] {
+        let bytes = [];
+        let i = 4;
+        do {
+            bytes[--i] = value & (255);
+            value = value>>8;
+        } while (i);
+        return bytes;
+    }
+
+    public getHex(): string {
+        return "0x" + this.bytesToHex(this.value);
     }
 
     public valueOf() {
-        return this.id;
+        return this.value;
+    }
+
+    public toString(){
+        return this.getHex();
     }
 
 }
