@@ -1,5 +1,4 @@
-import {IAccount} from "../src/core/IAccount";
-
+import { IAccount } from "../../core/IAccount";
 
 export class ContractHelper {
 

@@ -1,12 +1,11 @@
-import { Node } from "./managed/Node";
 import { AssetService } from "./services/AssetService";
 import { WalletService } from "./services/WalletServices";
 import { Address } from "./core/types/Address";
 import { AssetIdHex } from "./core/types/AssetIdHex";
 import { IAccount } from "./core/IAccount";
-import { EthereumService } from "../sdk/EthereumService";
 import { PublisherService } from "./services/PublisherService";
 import { ConsortiumService } from "./services/ConsortiumService";
+import { EthereumService } from "./native/sdk/EthereumService";
 
 export class JuicEchain {
 

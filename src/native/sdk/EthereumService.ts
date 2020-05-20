@@ -1,10 +1,12 @@
-import {Address} from "../src/core/types/Address";
-import {AssetId} from "../src/core/types/AssetId";
-import {IAccount} from "../src/core/IAccount";
-import {AssetIdHex} from "../src/core/types/AssetIdHex";
-import {PublisherId} from "../src/core/types/PublisherId";
+
 import {ContractHelper} from "./ContractHelper";
-import { Result } from "../src/core/types/Result";
+import { IAccount } from "../../core/IAccount";
+import { Result } from "../../core/types/Result";
+import { PublisherId } from "../../core/types/PublisherId";
+import { Address } from "../../core/types/Address";
+import { AssetIdHex } from "../../core/types/AssetIdHex";
+import { AssetId } from "../../core/types/AssetId";
+
 
 const consortiumAbi = require("./abi/Consortium").abi;
 const publisherAbi = require("./abi/Publishers").abi;

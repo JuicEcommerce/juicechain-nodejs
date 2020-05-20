@@ -1,7 +1,7 @@
-import { EthereumService } from '../../sdk/EthereumService';
 import { IAccount } from '../core/IAccount';
 import { PublisherId } from '../core/types/PublisherId';
 import { Address } from '../core/types/Address';
+import { EthereumService } from '../native/sdk/EthereumService';
 
 export class PublisherService {
 

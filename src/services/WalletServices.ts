@@ -1,9 +1,9 @@
-import { EthereumService } from "../../sdk/EthereumService";
 import { PublisherId } from "../core/types/PublisherId";
 import { IAccount } from "../core/IAccount";
 import { Result } from "../core/types/Result";
 import { Address } from "../core/types/Address";
 import { AssetIdHex } from "../core/types/AssetIdHex";
+import { EthereumService } from "../native/sdk/EthereumService";
 
 export class WalletService {
 
