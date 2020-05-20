@@ -12,7 +12,7 @@ const assetsAbi = require("./abi/Assets").abi;
 const orangeAbi = require("./abi/Orange").abi;
 const juiceAbi = require("./abi/Juice").abi;
 
-const config = require("../config.json");
+const config = require("./config.json");
 const Web3 = require("web3");
 
 export class EthereumService {

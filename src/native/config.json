@@ -1,0 +1,9 @@
+{
+  "contracts": {
+    "consortium": "0x1A54E7127494B78295b460b1E26387146C81d0bA",
+    "juice": "0x670260144a1f7a340DB20a10D2a824FB10033AEF",
+    "publishers": "0xcc6D612f113358D2bC207e8922FC5aa53e46571d",
+    "assets": "0xD784767A6CbeD0df199a4bA6fA30C2F06247765E",
+    "orange": "0x03bdbF2c5292849B1b50691c8134C50DdcCAb887"
+  }
+}
