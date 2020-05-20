@@ -136,4 +136,4 @@ export class ContractHelper {
     }
 
 };
-exports.ContractHelper = ContractHelper;
+

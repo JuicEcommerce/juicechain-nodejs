@@ -82,20 +82,20 @@ JuicEchain defines 5 general types of digital Assets, which can be applied to th
 #### Asset Name
 
 Asset names are unique in the whole network and limited to 32 character including the nodes prefix.
-Default separation character is `:` and only required once after the nodes name:
+Default separation character is `:` and only required once after the publishers name:
 
 *Example asset name, issued on the node "Demo"*
  ```
- demo:exampleassetname
+ publisherID:exampleassetname
  ```
 
-A special case are Master and Child assets. *Master assets need to end with  `#` Hashtag.*
+A special case are Master and Child assets. *Master assets need to end with  `:0` index.*
  ```
  // Master Asset Name
- demo:examplemaster#
+ demo:examplemaster:0
 
- // Child assets can occupy all left character space after the hashtag
- demo:examplemaster#1
+ // Child assets can occupy all left character space after the second separator
+ demo:examplemaster:1
  ```
 
  > Regex for Asset name
@@ -109,22 +109,23 @@ in the receivers wallet, latest after 10 seconds! However, its possible with the
 instant results even of transaction which are yet not minded e.g confirmed by any node.
 
 # Coding Examples
- ## Connect to Node
+ ## Create a new JuicEchain instance
 
 Create a new Node reference by calling "getNode()" from JuicEchain.
  ```typescript
-const demo:Node = JuicEchain.getNode("demo", *Username*, *API Key*);
+const juicechain: JuicEchain = new JuicEchain(*Chain ID*, *Chain Endpoint*);
  ```
 
 ## Create your first Wallet
 
-Wallets are connected to their origin Node. You can call "createWallet()" method on the Node reference
-to receive a new wallet. The wallet is connected to your API user. You can perform transfers
+Wallets are connected to their origin Node. You can call "open()" method on the JuiceChain wallet reference
+to create a new wallet on the chain. The wallet is connected to your publisher ID. You can perform transfers
 on your own wallets without need for a signature.  
 
 ```typescript
-const wallet:Wallet = await demo.createWallet();
+const wallet = await juicechain.wallet.open(*PublisherId*, *WalletAddress*, *TransferLock*, *IAccount*);
 ```
+If you dont want to wait for confirmation from the blockchain that the wallet is created and stored you can pass additional boolean parameter that identifies so.
 
 ## Issue your first Asset
 
