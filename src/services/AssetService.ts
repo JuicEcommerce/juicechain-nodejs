@@ -3,7 +3,7 @@ import { IAccount } from '../core/IAccount';
 import { Address } from '../core/types/Address';
 import { ChainAssetData } from '../models/ChainAssetData';
 import { AssetId } from '../core/types/AssetId';
-import { EthereumService } from '../native/sdk/EthereumService';
+import { EthereumService } from '../native/EthereumService';
 
 export class AssetService {
 

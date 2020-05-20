@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "es2017",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "outDir": "build",
+    "rootDir": "src",
+    "declaration": true,
+    "experimentalDecorators": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "types": [
+      "@types/node"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "test",
+    "bin",
+    "build",
+    "modules",
+    "services",
+    "data",
+    "npm",
+    "src/services/forms/katarina-test"
+  ]
+}

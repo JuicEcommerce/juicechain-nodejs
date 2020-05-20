@@ -1,6 +1,6 @@
 {
   "name": "juicechain",
-  "version": "1.1.5",
+  "version": "2.1.0",
   "description": "SDK for JuicEchain Blockchain Network",
   "main": "JuicEchain.js",
   "scripts": {
@@ -23,13 +23,11 @@
   },
   "homepage": "https://github.com/JuicEcommerce/juicechain-sdk-nodejs#readme",
   "dependencies": {
-    "bitcore-lib": "^8.3.3",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.4"
+    "web3": "^1.2.7"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.6",
-    "@types/node": "^12.0.2",
+    "@types/node": "^12.12.41",
     "chai": "^4.2.0",
     "mocha": "^6.1.4",
     "mocha-jenkins-reporter": "^0.4.2",

@@ -1,12 +1,10 @@
-
 import {ContractHelper} from "./ContractHelper";
-import { IAccount } from "../../core/IAccount";
-import { Result } from "../../core/types/Result";
-import { PublisherId } from "../../core/types/PublisherId";
-import { Address } from "../../core/types/Address";
-import { AssetIdHex } from "../../core/types/AssetIdHex";
-import { AssetId } from "../../core/types/AssetId";
-
+import { IAccount } from "../core/IAccount";
+import { Result } from "../core/types/Result";
+import { PublisherId } from "../core/types/PublisherId";
+import { Address } from "../core/types/Address";
+import { AssetIdHex } from "../core/types/AssetIdHex";
+import { AssetId } from "../core/types/AssetId";
 
 const consortiumAbi = require("./abi/Consortium").abi;
 const publisherAbi = require("./abi/Publishers").abi;
@@ -16,7 +14,6 @@ const juiceAbi = require("./abi/Juice").abi;
 
 const config = require("../config.json");
 const Web3 = require("web3");
-
 
 export class EthereumService {
 

@@ -1,5 +1,5 @@
 import { IAccount } from '../core/IAccount';
-import { EthereumService } from '../native/sdk/EthereumService';
+import { EthereumService } from '../native/EthereumService';
 
 export class ConsortiumService {
 

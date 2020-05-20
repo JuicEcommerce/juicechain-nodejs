@@ -5,7 +5,7 @@ import { AssetIdHex } from "./core/types/AssetIdHex";
 import { IAccount } from "./core/IAccount";
 import { PublisherService } from "./services/PublisherService";
 import { ConsortiumService } from "./services/ConsortiumService";
-import { EthereumService } from "./native/sdk/EthereumService";
+import { EthereumService } from "./native/EthereumService";
 
 export class JuicEchain {
 
@@ -14,7 +14,6 @@ export class JuicEchain {
     publisher: PublisherService;
     consortium: ConsortiumService;
     etheriumService: EthereumService;
-
 
     constructor(chainId, chainEndpoint) {
         this.etheriumService = new EthereumService(chainId, chainEndpoint);

@@ -1,6 +1,6 @@
 import {Bytes32} from "./Bytes32";
-import {PublisherId} from "./PublisherId";
 import {AssetIdHex} from "./AssetIdHex";
+import {PublisherId} from "./PublisherId";
 
 export class AssetId extends Bytes32 {
 
