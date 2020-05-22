@@ -133,13 +133,14 @@ Assets are connected to their "issuing" wallet. Means the newly created assets a
 into (address / wallet). They can be from there transferred anywhere further  .
 
 ```typescript
- const name:string  = "demo:myasset";
- const title:string = "My First Asset";
+ const assetId: AssetID = new AssetID;("publisherID:myasset:0").getHex();
  const amount:number = 100;
- const type:string = AssetType.ADMISSION;
- const publisher:string = "BackToTheFuture GmbH";
+ const isRoot:boolean = true;
+ const account: IAccount = *PublishersAccount*;
+ const confirm: boolean = true;
 
- const asset:Asset = await demo.issue(name, title, type, amount, wallet.address, publisher);
+
+ const response = await juicechain.assets..issue(assetId, isRoot, amount, account, confirm);
 ```
 
 ## Transfer asset
@@ -147,7 +148,7 @@ into (address / wallet). They can be from there transferred anywhere further  .
 Call `wallet.transfer()" to transfer the given asset with amount to the receivers address.
 
 ```typescript
-const successTransfer:boolean = await wallet.transfer(*some-wallet-address*, "demo:myasset", 2, "");
+const successTransfer = await juicechain.transfer(*recipientAddress*, *assetId*, 1, *senderAccount*, true);
 ```
 
 ## Fetch wallet balance
@@ -155,7 +156,11 @@ const successTransfer:boolean = await wallet.transfer(*some-wallet-address*, "de
 The balance (overview of assets owned and amount) can be fetched directly from the Wallet reference.
 
 ```typescript
-const balance:Array<Balance> = await wallet.getBalance();
+ const address: Address = *some-account-address*;
+ const offset:number = 0;
+ const account: IAccount = *SomeAccount*;
+
+const balance:Array<Balance> = await juicechain.wallet.getBalance(address, offset, account);
 ```
 
 Possible result as JSON
