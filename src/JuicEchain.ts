@@ -7,7 +7,7 @@ import { PublisherService } from "./services/PublisherService";
 import { ConsortiumService } from "./services/ConsortiumService";
 import { EthereumService } from "./native/EthereumService";
 
-export class JuicEchain {
+export default class JuicEchain {
 
     asset: AssetService;
     wallet: WalletService;
