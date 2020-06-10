@@ -94,8 +94,9 @@ export class ContractHelper {
                             //console.log('=> reciept');
                             //console.log(receipt);
                             resolve({
-                                success: true
-                            });
+                                success: true,
+                                receipt
+                            } as any);
                         })
                         .on('error', error => {
                             console.log(error.message);
