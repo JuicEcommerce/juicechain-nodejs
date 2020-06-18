@@ -1,11 +1,11 @@
 {
   "name": "juicechain",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "SDK for JuicEchain Blockchain Network",
   "main": "JuicEchain.js",
   "scripts": {
     "test": "mocha --recursive test",
-    "build": "tsc --p tsdeploy.json;cp package.json build/package.json;cp README.md build/README.md",
+    "build": "tsc --p tsdeploy.json",
     "jenkins-test": "JUNIT_REPORT_PATH=report.xml mocha --colors --reporter mocha-jenkins-reporter --exit --recursive ./test"
   },
   "repository": {
